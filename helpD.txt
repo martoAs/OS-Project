@@ -1,0 +1,12 @@
+Welcome to the A. Martina and R. Guido MINISHELL! Below is a list of supported commands (＾◡＾):
+
+1. `mkdir <directoryName>`: This command creates a new directory using `<directoryName>` as its name.
+2. `rmdir <directoryName>`: Deletes the specified directory named `<directoryName>`, provided it is empty.
+3. `cat <fileName>`: Lists the contents of the file identified by `<fileName>`.
+4. `touch <fileName>`: Generates a new file with `<fileName>` as its name.
+5. `exit`: This command terminates the execution of the minishell.
+6. `ls` : Displays the contents of the current directory.
+7. `chmod <octalThreeDigitsNumber> <fileName>` : Modifies the file permissions for reading, writing, and executing on the file specified by <fileName> (the number must be in octal format).
+	The first digit represents the owner's permissions.
+	The second digit represents the group's permissions.
+	The third digit represents permissions for others.
