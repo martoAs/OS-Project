@@ -7,7 +7,7 @@
 #define L 13
 #define cHilos 25
 
-sem_t mutex, lugares,lectores,escribir,leer;
+sem_t mutex, lugares,lectores,escribir;
 long int tablaReservas[L];
 int lugaresLibres[L];
 
@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 	sem_init(&lugares, 0, 12);
 	sem_init(&lectores, 0, 0);
 	sem_init(&escribir,0,1);
-	sem_init(&leer,0,1);
+
 	
 	for(int j = 0; j<L; j++){
 		tablaReservas[j]=0;
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 	sem_destroy(&mutex);
 	sem_destroy(&lugares);
 	sem_destroy(&escribir);
-	sem_destroy(&leer);
+
 	
 	
 	return 0;
