@@ -4,13 +4,11 @@
 #include <fcntl.h>
 
 
-
-//read es como wait y write es como signal
 int main(){
-	int pipeAB[2];
-	int pipeBC[2];
-	int pipeCBA[2];
-	pid_t A, B, C;
+	int pipeAB[2]; //Pipe conexion A->B
+	int pipeBC[2]; //Pipe conexion B->C
+	int pipeCBA[2]; //Pipe conexion B->A y C->A
+	pid_t A, B, C; //Los tres procesos encargados de imprimir los caracteres
 	char buffer;
 
 	
@@ -21,7 +19,7 @@ int main(){
 	}
 	
 	write(pipeCBA[1],"C",1);
-	write(pipeCBA[1],"C",1);
+	write(pipeCBA[1],"C",1); //Se empieza escribiendo en el buffer dos C para activar a A
 	
 	
 	A = fork();
@@ -29,9 +27,10 @@ int main(){
 		perror("ERROR CREATING CHILD A");
 		exit(1);
 	}
-	else if(A==0){
+	else if(A==0){ //Empieza el codigo correspondiente al proceso encargado de imprimir el caracter A
 		close(pipeAB[0]); //Cierra el extremo de lectura
 		close(pipeCBA[1]); //Cierra el extremo de escritura
+		close(pipeBC[1]); close(pipeBC[0]); //Cierra el pipe B->C 
 		
 		while(1){
 			
@@ -42,7 +41,7 @@ int main(){
 					printf("A");
 					fflush(stdout);
 					write(pipeAB[1], "A", 1);
-					usleep(100000);
+					usleep(100000); 
 				}
 			}
 		}
@@ -57,7 +56,7 @@ int main(){
 		perror("ERROR CREATING CHILD B");
 		exit(1);
 	}
-	else if(B==0){
+	else if(B==0){//Empieza la ejecucion del proceso encargado de imprimir el caracter B
 		close(pipeCBA[0]); //Cierra el extremo de lectura
 		close(pipeAB[1]); //Cierra el extremo de escritura
 		close(pipeBC[0]);
@@ -82,10 +81,11 @@ int main(){
 		perror("ERROR CREATING CHILD C");
 		exit(1);
 	}
-	else if(C==0){
+	else if(C==0){ //Empieza la ejecucion del proceso encargado de imprimir el caracter C
 		
-		close(pipeBC[1]); 
-		close(pipeCBA[0]);
+		close(pipeBC[1]); //Cierra escritura
+		close(pipeCBA[0]); //Cierra lectura
+		close(pipeAB[0]); close(pipeAB[1]); //Cierra pipe A->B 
 		
 		while(1){
 
