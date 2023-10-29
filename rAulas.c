@@ -149,7 +149,7 @@ int main(int argc, char **argv)
     int thread_ids[cHilos];
     
     sem_init(&mutex, 0, 1);
-	sem_init(&lugares, 0, 12);
+	sem_init(&lugares, 0, 13);
 	sem_init(&lectores, 0, 0);
 	sem_init(&escribir,0,1);
 
