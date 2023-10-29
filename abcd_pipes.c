@@ -34,7 +34,12 @@ int main(){
 	else if(A==0){
 		close(pipeAB[0]); //Cierra el extremo de lectura
 		close(pipeBA[1]); //Cierra el extremo de escritura
-		
+        close(pipeBC[0]);
+        close(pipeBC[1]);
+        close(pipeCB[0]);
+        close(pipeCB[1]);
+        close(pipeCD[0]);
+        close(pipeCD[1]);
 		while(1){
 			
 			read(pipeBA[0], &buffer, 1);
@@ -62,6 +67,8 @@ int main(){
 		close(pipeAB[1]); //Cierra el extremo de escritura
 		close(pipeBC[0]);
 		close(pipeBA[0]); //Cierra el extremo de lect
+        close(pipeCD[0]);
+        close(pipeCD[1]);
 
 		while(1){
 				
@@ -92,7 +99,11 @@ int main(){
 		close(pipeBC[1]); //escritura
 		close(pipeCB[0]); //lect
 		close(pipeCD[0]);
-		while(1){
+        close(pipeAB[0]);
+        close(pipeAB[1]);
+        close(pipeBA[0]);
+        close(pipeBA[1]);
+        while(1){
 
 			read(pipeBC[0],&buffer,1);
 			if(buffer=='B'){
@@ -123,6 +134,12 @@ int main(){
 	else if(D==0){
 		close(pipeCD[1]);
 		close(pipeCB[0]);
+        close(pipeAB[0]);
+        close(pipeAB[1]);
+        close(pipeBC[0]);
+        close(pipeBC[1]);
+        close(pipeBA[0]);
+        close(pipeBA[1]);
 		while(1){
 
 			read(pipeCD[0],&buffer,1);
