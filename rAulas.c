@@ -44,19 +44,15 @@ void cancelar(){
 			tablaReservas[i]=0;
 			sem_post(&lugares);
 			finish = 1;
+            printf("Soy %li y cancele el turno de la hora %i \n",pthread_self(),hora);
 		}
 	
 	}
+    if(hora==-1){
+        printf("Soy %li no tenia turnos para cancelar \n",pthread_self());
+    }
 	sem_post(&escribir);
-	
-	//fflush(stdout);
-	if(finish){
-		printf("Soy %li y cancele el turno de la hora %i \n",pthread_self(),hora);
-	}
-	else{
-		printf("Soy %li no tenia turnos para cancelar \n",pthread_self());
-	}
-	
+
 	
 }
 
@@ -134,7 +130,6 @@ void * start(void * a){
 	while(i<4){
 		elegirOperacion();
 		i++;
-		sleep(3);
 	}
 
 	return 0;
