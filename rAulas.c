@@ -23,7 +23,7 @@ void elegirReserva(){
 		}
 	}
 	
-	srand(time(NULL));
+	
 	int numR = rand() % j;
 	hora = lugaresLibres[numR]+9;
 	tablaReservas[lugaresLibres[numR]] = pthread_self();
@@ -63,19 +63,19 @@ void cancelar(){
 
 
 void reservar(){
-	
+	sem_wait(&escribir);
 	if(sem_trywait(&lugares)==0){
 		
-		sem_wait(&escribir);
+		
 		elegirReserva();
-		sem_post(&escribir);
+		
 		
 	}
 	else{
 		//fflush(stdout);
 		printf("Soy %li y no pude reservar, lugares ocupados. \n",pthread_self());
 	}
-
+	sem_post(&escribir);
 	
 }
 
@@ -115,7 +115,7 @@ void consultar(){
 
 void elegirOperacion(){
 	
-	srand(time(NULL));
+	
 	int numA = rand() % 100 +1;
 	if(numA<=50){
 		reservar();
@@ -145,6 +145,7 @@ void * start(void * a){
 int main(int argc, char **argv)
 {
 	setvbuf(stdout, NULL, _IONBF, 0);
+	srand(time(NULL));
 	pthread_t threads[cHilos];
     int thread_ids[cHilos];
     
