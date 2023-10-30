@@ -37,6 +37,7 @@ void elegirReserva(struct sharedMemory *mem, int id){
 }
 void reservar(struct sharedMemory *mem, int id){
     sem_wait(&mem->escribir);
+
     if(sem_trywait(&mem->lugares)==0){
         elegirReserva(mem,id);
     }else{
@@ -54,7 +55,7 @@ void consultar(struct sharedMemory *mem, int id){
     }
     sem_post(&mem->lectores);
     sem_post(&mem->mutex);
-
+    printf("Soy %i y quiero consultar \n",id);
     for(int i = 0; i < cLugares; i++){
         if(mem->tablaReservas[i]==id){
             printf("Soy %i y tengo reserva a la hora %i \n",id,i+9);
@@ -75,6 +76,7 @@ void cancelar(struct sharedMemory *mem, int id){
     int hora = -1;
     int finish = 0;
     sem_wait(&mem->escribir);
+
     for(int i = 0; i < cLugares && !finish; i++){
         if(mem->tablaReservas[i]==id){
             hora = i+9;

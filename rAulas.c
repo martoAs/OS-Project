@@ -86,7 +86,7 @@ void consultar(){
 	}
 	sem_post(&lectores);
 	sem_post(&mutex);
-	
+    printf("Soy %li y quiero consultar \n",pthread_self());
 	for(int i = 0; i < L; i++){
 		if(tablaReservas[i]==pthread_self()){
 			//fflush(stdout);
