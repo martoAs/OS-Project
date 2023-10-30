@@ -33,56 +33,59 @@ int main() {
         printf("miniShell $ ");
         if (fgets(input, sizeof(input), stdin) == NULL) {
             finish = 1;
-        }
+        } else{
 
-        // Remueve el final de linea y lo cambia por un final de cadena asi funcionan las funciones de libreria string
-        input[strcspn(input, "\n")] = '\0';
+            // Remueve el final de linea y lo cambia por un final de cadena asi funcionan las funciones de libreria string
+            input[strcspn(input, "\n")] = '\0';
 
-        // Dividimos el input dado en tokens 
-                
-        token = strtok(input, " ");
-        tokenCount = 0;
-        while (token != NULL && tokenCount < 20) {
-            tokens[tokenCount++] = token;
-            token = strtok(NULL, " ");
-        }
-        tokens[tokenCount] = NULL; // terminamos la lista con un nulo para indicar su fin
+            // Dividimos el input dado en tokens
 
-        if (tokenCount > 0) {
-            int is_valid_command = 0;
-            
-            // Chequea si el comando ingresado es valido
-            for (int i = 0; i < num_valid_commands && !is_valid_command; i++) {
-                if (strcmp(tokens[0], valid_commands[i]) == 0) {
-                    
-                    is_valid_command = 1;
-                }
+            token = strtok(input, " ");
+            tokenCount = 0;
+            while (token != NULL && tokenCount < 20) {
+                tokens[tokenCount++] = token;
+                token = strtok(NULL, " ");
             }
-            
-            if (is_valid_command) {
-                
-                if(strcmp(tokens[0],"exit")==0){
-                    printf("Goodbye! Have a nice day :)");
-                    finish = 1;
-                }else{
-                    int childpid = fork();
-                   
-                    if(childpid==0){
-                    
-                    execv(strcat(command,tokens[0]),tokens);
-                    
-                    }else if (childpid<0) {
-                        perror("fork");
-                        exit(1);
-                    }
-                    else{
-                        waitpid(childpid,NULL,0);
+            tokens[tokenCount] = NULL; // terminamos la lista con un nulo para indicar su fin
+
+            if (tokenCount > 0) {
+                int is_valid_command = 0;
+
+                // Chequea si el comando ingresado es valido
+                for (int i = 0; i < num_valid_commands && !is_valid_command; i++) {
+                    if (strcmp(tokens[0], valid_commands[i]) == 0) {
+
+                        is_valid_command = 1;
                     }
                 }
-            } else {
-                printf("Invalid command: %s\n", tokens[0]);
+
+                if (is_valid_command) {
+
+                    if(strcmp(tokens[0],"exit")==0){
+                        printf("Goodbye! Have a nice day :)");
+                        finish = 1;
+                    }else{
+                        int childpid = fork();
+
+                        if(childpid==0){
+
+                            execv(strcat(command,tokens[0]),tokens);
+
+                        }else if (childpid<0) {
+                            perror("fork");
+                            exit(1);
+                        }
+                        else{
+                            waitpid(childpid,NULL,0);
+                        }
+                    }
+                } else {
+                    printf("Invalid command: %s\n", tokens[0]);
+                }
             }
+
         }
+
     }
     
     return 0;

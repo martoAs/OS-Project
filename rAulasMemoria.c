@@ -166,6 +166,11 @@ int main(){
         wait(NULL);
         i--;
     }
+    //Destruimos los semaforos
+    sem_destroy(&mem->escribir);
+    sem_destroy(&mem->lectores);
+    sem_destroy(&mem->lugares);
+    sem_destroy(&mem->mutex);
     //Liberacion de la memoria compartida
     if(shmdt((char *) mem) == -1){
         perror("Error en shmdt");
