@@ -63,7 +63,7 @@ int main() {
             if (is_valid_command) {
 
                 if(strcmp(tokens[0],"exit")==0){
-                    printf("Goodbye! Have a nice day :)");
+                    printf("Goodbye! Have a nice day :) \n");
                     finish = 1;
                 }else{
                     int childpid = fork();
