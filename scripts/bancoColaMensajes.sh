@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc -o bancoColaMjes bancoColaMjes.c
+gcc -o bancoColaMensajes bancoColaMensajes.c
 ./bancoColaMjes
