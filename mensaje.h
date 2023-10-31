@@ -1,8 +1,8 @@
 #define MAXIMO_MESA_ENTRADA 30
 #define MAXIMO_COLAS_PARTICULARES 15
-#define CANTIDAD_POLITICOS 5 //cantidad de politicos
-#define CANTIDAD_EMPRESAS 5 //cantidad de empresarios
-#define CANTIDAD_COMUNES 5  //cantidad de clientes comunes
+#define CANTIDAD_POLITICOS 45 //cantidad de politicos
+#define CANTIDAD_EMPRESAS 45 //cantidad de empresarios
+#define CANTIDAD_COMUNES 45  //cantidad de clientes comunes
 #define ENTRADA 100
 #define COLA_POLITICOS 101  //PRESI_LLENO
 #define POLITICO_ATENDIDO 102  //PRESI

@@ -207,29 +207,29 @@ int main() {
     pthread_create(&hiloEmpleadoEmpresa2, NULL, metodoEmpleadoEmpresa2, NULL);
 
     pthread_t threadsClientesComunes[45];
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_create(&threadsClientesComunes[i], NULL, clienteComun, NULL);
     }
 
     pthread_t threadsClientesEmpresa[45];
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_create(&threadsClientesEmpresa[i], NULL, clienteEmpresa, NULL);
     }
 
     pthread_t threadsClientesPoliticos[45];
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_create(&threadsClientesPoliticos[i], NULL, clientePolitico, NULL);
     }
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_join(threadsClientesComunes[i], NULL);
     }
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_join(threadsClientesPoliticos[i], NULL);
     }
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 45; i++) {
         pthread_join(threadsClientesEmpresa[i], NULL);
     }
 
