@@ -34,6 +34,7 @@ void atenderComun(int n){
 
 
 int clientePolitico(){
+    printf("politico quiere ingresar en la colaMesasEntrada\n");
     if(msgrcv(id, &msg_entrada, MSGSIZE, ENTRADA, IPC_NOWAIT) != -1){ //Si hay espacio en la mesa de entrada el cliente ingresa, caso contrario se retira
         printf("politico ingresó en la colaMesasEntrada\n");
 
@@ -49,15 +50,17 @@ int clientePolitico(){
         msgrcv(id, &msg_POLITICO_ATENDIDO, MSGSIZE, POLITICO_ATENDIDO, 0); //espera a que el empleado lo atienda para irse del banco
         msgsnd(id, &msg_COLA_POLITICOS, MSGSIZE, 0); //Libero el espacio en la cola de politicos porque ya me voy.
         // politico se va del banco despues de ser atendido
+        printf("politico se va del banco despues de ser atendido\n");
     }
     else{
         printf("no hay lugar en la colaMesaEntrada, politico se retira\n");
-        fflush(stdout);
+       // fflush(stdout);
     }
     return 0;
 }
 
 int clienteComun(){
+    printf("cliente comun quiere ingresar en la colaMesasEntrada\n");
     if(msgrcv(id, &msg_entrada, MSGSIZE, ENTRADA, IPC_NOWAIT) != -1){ //Si hay espacio en la mesa de entrada el cliente ingresa, caso contrario se retira
         printf("cliente comun ingresó en la colaMesasEntrada\n");
 
@@ -71,16 +74,17 @@ int clienteComun(){
         msgrcv(id, &msg_COMUN_ATENDIDO, MSGSIZE, COMUN_ATENDIDO, 0); //espera a que el empleado lo atienda para irse del banco
         msgsnd(id, &msg_COLA_CLIENTE_COMUN, MSGSIZE, 0); //Libera la cola de clientescomunes
         // cliente comun se va del banco despues de ser atendido
-
+        printf("cliente comun se va del banco despues de ser atendido\n");
     }
     else{
         printf("no hay lugar en la colaMesaEntrada, cliente comun se retira\n");
-        fflush(stdout);
+       // fflush(stdout);
     }
     return 0;
 }
 
 int clienteEmpresa(){
+    printf("cliente empresario quiere ingresar en la colaMesasEntrada\n");
     if(msgrcv(id, &msg_entrada, MSGSIZE, ENTRADA, IPC_NOWAIT) != -1){ //Si hay espacio en la mesa de entrada el cliente ingresa, caso contrario se retira
         printf("cliente empresario ingresó en la colaMesasEntrada\n");
 
@@ -95,43 +99,56 @@ int clienteEmpresa(){
         msgrcv(id, &msg_EMPRESARIO_ATENDIDO, MSGSIZE, EMPRESARIO_ATENDIDO, 0);
         msgsnd(id, &msg_COLA_EMPRESARIOS, MSGSIZE, 0); //Libera la cola de empresarios
         // cliente empresario se va del banco despues de ser atendido
+        printf("cliente empresario se va del banco despues de ser atendido\n");
     }
     else{
         printf("no hay lugar en la colaMesaEntrada, cliente comun se retira\n");
-        fflush(stdout);
+       // fflush(stdout);
     }
     return 0;
 }
 
 int empleadoEmpresarios(int nro){
     while(1){
+
         msgrcv(id, &msg_DESPERTAR_EMPLEADO_EMPRESA, MSGSIZE, DESPERTAR_EMPLEADO_EMPRESA, 0); //espera a ser despertado por un cliente
+
         if (msgrcv(id, &msg_ESPERANDO_POLITICO, MSGSIZE, ESPERANDO_POLITICO, IPC_NOWAIT) != -1){  //si hay politicos esperando, atiende con prioridad
+
             atenderPolitico(nro);
             msgsnd(id, &msg_POLITICO_ATENDIDO, MSGSIZE, 0); //le avisa al politico que ya lo atendio
+            printf("empleado %d termino de atender a un politico\n",nro);
         }
         else if (msgrcv(id, &msg_ESPERANDO_EMPRESARIO, MSGSIZE, ESPERANDO_EMPRESARIO, IPC_NOWAIT) != -1){ //si hay empresarios esperando, atiende
+            printf("empleado %d esta atendiendo a una empresa\n",nro);
             atenderEmpresa(nro);
             msgsnd(id, &msg_EMPRESARIO_ATENDIDO, MSGSIZE, 0); //le avisa al empresario que ya lo atendio
+            printf("empleado %d termino de atender a una empresa\n",nro);
         }
     }
 }
 
 int empleadoComunes(int nro){
     while(1){
+
         msgrcv(id, &msg_DESPERTAR_EMPLEADO_COMUN, MSGSIZE, DESPERTAR_EMPLEADO_COMUN, 0); //espera a ser despertado por un cliente
+
         if (msgrcv(id, &msg_ESPERANDO_POLITICO, MSGSIZE, ESPERANDO_POLITICO, IPC_NOWAIT) != -1){ //si hay politicos esperando, atiende con prioridad
+
             atenderPolitico(nro);
             msgsnd(id, &msg_POLITICO_ATENDIDO, MSGSIZE, 0); //le avisa al politico que ya lo atendio
+            printf("empleado %d termino de atender a un politico\n",nro);
         }
         else if (msgrcv(id, &msg_COMUN_ESPERANDO, MSGSIZE, COMUN_ESPERANDO, IPC_NOWAIT) != -1){ //si hay clientes comunes esperando, atiende
             atenderComun(nro);
             msgsnd(id, &msg_COMUN_ATENDIDO, MSGSIZE, 0); //le avisa al cliente comun que ya lo atendio
+            printf("empleado %d termino de atender a un cliente comun\n",nro);
         }
     }
 }
 
 int main(){
+    setvbuf(stdout, NULL, _IONBF, 0);
     int p, pid;
 
     strcpy(msg_entrada.msg_text, "E");
@@ -240,7 +257,7 @@ int main(){
     }
 
     if(pid != 0){
-        for(p = 0; p < CANTIDAD_COMUNES + CANTIDAD_EMPRESAS + CANTIDAD_POLITICOS + 3; p++){
+        for(p = 0; p < CANTIDAD_COMUNES + CANTIDAD_EMPRESAS + CANTIDAD_POLITICOS; p++){
             wait(NULL);
         }
     }

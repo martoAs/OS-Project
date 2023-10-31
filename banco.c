@@ -103,6 +103,7 @@ void *clienteComun(){
         sem_post(&colaClienteComun);
     }else
         printf("La cola está llena, el cliente se va del banco\n");
+    return NULL;
 }
 
 
@@ -134,6 +135,7 @@ void *clienteEmpresa(){
     }
     else
         printf("La cola está llena, el cliente se va del banco\n");
+    return NULL;
 }
 
 
@@ -165,6 +167,7 @@ void *clientePolitico(){
     }
     else
         printf("La cola está llena, el cliente se va del banco\n");
+    return NULL;
 }
 
 
