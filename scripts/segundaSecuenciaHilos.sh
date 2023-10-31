@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc -o AB-ABC-ABCD AB-ABC-ABCD.c -lpthread
-./AB-ABC-ABCD
+gcc -o ABCD-V2 ABCD-V2.c -lpthread
+./ABCD-V2
