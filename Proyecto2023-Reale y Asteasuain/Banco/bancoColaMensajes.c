@@ -102,7 +102,7 @@ int clienteEmpresa(){
         printf("cliente empresario se va del banco despues de ser atendido\n");
     }
     else{
-        printf("no hay lugar en la colaMesaEntrada, cliente comun se retira\n");
+        printf("no hay lugar en la colaMesaEntrada, cliente empresario se retira\n");
        // fflush(stdout);
     }
     return 0;
