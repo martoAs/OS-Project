@@ -66,5 +66,10 @@ int main() {
     pthread_join(threadC, NULL);
     pthread_join(threadD, NULL);
 
+    sem_destroy(&semA);
+    sem_destroy(&semB);
+    sem_destroy(&semC);
+    sem_destroy(&semD);
+
     return 0;
 }
