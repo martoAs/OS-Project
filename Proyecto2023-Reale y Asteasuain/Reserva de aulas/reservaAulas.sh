@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc -o rAulas rAulas.c
+gcc -o rAulas rAulas.c -lpthread
 ./rAulas

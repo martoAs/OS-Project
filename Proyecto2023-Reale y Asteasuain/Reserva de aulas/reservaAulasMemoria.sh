@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc -o rAulasMemoria rAulasMemoria.c
+gcc -o rAulasMemoria rAulasMemoria.c -lpthread
 ./rAulasMemoria
